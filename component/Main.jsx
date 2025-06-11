@@ -1,8 +1,13 @@
+import { useState } from "react";
+
 export default function Main() {
-  const ingredients = ["chicken", "Tomatoes", "Perrper"];
+  const [ingredient, setIngredient] = useState([]);
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Form Submitted");
+    const formData = new FormData(e.currentTarget);
+    const newIngredient = formData.get("ingredient");
+    setIngredient((prevIngr) => [...prevIngr, newIngredient]);
   }
 
   return (
@@ -14,11 +19,11 @@ export default function Main() {
           aria-label="Add ingredient"
           name="ingredient"
         />
-        <button>Add Ingredient</button>
+        <button onSubmit={handleSubmit}>Add Ingredient</button>
       </form>
       <ul>
-        {ingredients.map((ing) => (
-          <li key={ing}>{ing}</li>
+        {ingredient.map((ing, index) => (
+          <li key={index}>{ing}</li>
         ))}
       </ul>
     </main>
